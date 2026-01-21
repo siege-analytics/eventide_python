@@ -1,0 +1,7 @@
+WRITE_MESSAGE = "message_store.write_message"
+GET_STREAM_MESSAGES = "message_store.get_stream_messages"
+GET_CATEGORY_MESSAGES = "message_store.get_category_messages"
+GET_LAST_STREAM_MESSAGE = "message_store.get_last_stream_message"
+STREAM_VERSION = "message_store.stream_version"
+ACQUIRE_LOCK = "message_store.acquire_lock"
+MESSAGE_STORE_VERSION = "message_store.message_store_version"
