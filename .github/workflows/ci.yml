@@ -27,3 +27,37 @@ jobs:
         run: mypy src
       - name: Test
         run: pytest
+
+  integration:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: postgres
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports:
+          - 5432:5432
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev,postgres]"
+      - name: Install Message DB
+        env:
+          PGHOST: localhost
+          PGUSER: postgres
+          DATABASE_NAME: message_store
+        run: |
+          git clone https://github.com/message-db/message-db.git /tmp/message-db
+          /tmp/message-db/database/install.sh
+      - name: Integration tests
+        env:
+          MESSAGE_DB_DSN: postgresql://message_store@localhost/message_store
+        run: pytest -m integration

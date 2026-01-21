@@ -39,3 +39,22 @@ class MessageDBClient(Protocol):
         stream_name: str,
         type: str | None = None,
     ) -> MessageRecord | None: ...
+
+    def iter_stream_messages(
+        self,
+        stream_name: str,
+        position: int | None = None,
+        batch_size: int | None = None,
+        condition: str | None = None,
+    ) -> Iterable[MessageRecord]: ...
+
+    def iter_category_messages(
+        self,
+        category: str,
+        position: int | None = None,
+        batch_size: int | None = None,
+        correlation: str | None = None,
+        consumer_group_member: int | None = None,
+        consumer_group_size: int | None = None,
+        condition: str | None = None,
+    ) -> Iterable[MessageRecord]: ...

@@ -18,9 +18,13 @@ dev = [
   "pytest>=8.0",
   "ruff>=0.6",
 ]
+postgres = ["psycopg[binary]>=3.2"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+markers = [
+  "integration: requires Message DB",
+]
 
 [tool.mypy]
 python_version = "3.11"
